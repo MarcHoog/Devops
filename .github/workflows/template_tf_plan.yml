@@ -1,0 +1,72 @@
+name: Terraform Plan Template
+
+on:
+  workflow_call:
+    inputs:
+      working_directory:
+        required: true
+        type: string
+        description: "Terraform working directory"
+    secrets:
+      TF_GITHUB_TOKEN_PAT:
+        required: true
+      TF_AWS_ACCES_KEY_ID:
+        required: true
+      TF_AWS_SECRET_ACCESS_KEY:
+        required: true
+      TF_HETZNER_TOKEN:
+        required: true
+      GITHUB_TOKEN:
+        required: true
+
+env:
+  TF_VERSION: 1.11.4
+
+jobs:
+  terraform-plan:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ inputs.working_directory }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Terraform Setup
+        uses: ./.github/actions/terraform-setup
+        with:
+          tf_version: ${{ env.TF_VERSION }}
+          github_token_pat: ${{ secrets.TF_GITHUB_TOKEN_PAT }}
+          aws_access_key_id: ${{ secrets.TF_AWS_ACCES_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.TF_AWS_SECRET_ACCESS_KEY }}
+
+      - id: plan
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.TF_AWS_ACCES_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.TF_AWS_SECRET_ACCESS_KEY }}
+          HCLOUD_TOKEN: ${{ secrets.TF_HETZNER_TOKEN }}
+        run: |
+          terraform plan -no-color -out=tfplan
+          TF_EXIT_CODE=$?
+          PLAN=$(terraform show -no-color tfplan)
+          echo "plan<<EOF" >> $GITHUB_OUTPUT
+          echo "$PLAN" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+          exit $TF_EXIT_CODE
+
+      - name: Comment Terraform Plan on PR
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const plan = `${{ steps.plan.outputs.plan }}`;
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `### Terraform Plan 📦
+                    \`\`\`hcl
+                    ${plan}
+                    \`\`\`
+                    `
+                                });

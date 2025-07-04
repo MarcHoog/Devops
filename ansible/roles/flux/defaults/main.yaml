@@ -1,0 +1,6 @@
+kubeconfig_path: "/etc/rancher/k3s/k3s.yaml" 
+github_owner: "myorg"
+github_repo: "myrepo"
+github_branch: "main"
+is_private: "n"
+github_path: "."

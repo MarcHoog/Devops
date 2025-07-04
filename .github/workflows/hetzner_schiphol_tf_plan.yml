@@ -1,0 +1,21 @@
+name: Hetzner Schiphol | Terraform Plan on PR
+
+on:
+  pull_request:
+    branches:
+      - main
+    types: [opened, synchronize, reopened]
+    paths:
+      - 'terraform/env/schiphol/env/**'
+
+jobs:
+  call-terraform-plan:
+    uses: marchoog/devops/.github/workflows/template_tf_plan.yml@main
+    with:
+      working_directory: "./terraform/env/schiphol/env"
+    secrets:
+      TF_GITHUB_TOKEN_PAT: ${{ secrets.TF_GITHUB_TOKEN_PAT }}
+      TF_AWS_ACCES_KEY_ID: ${{ secrets.TF_AWS_ACCES_KEY_ID }}
+      TF_AWS_SECRET_ACCESS_KEY: ${{ secrets.TF_AWS_SECRET_ACCESS_KEY }}
+      TF_HETZNER_TOKEN: ${{ secrets.TF_HETZNER_TOKEN }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,0 +1,47 @@
+---
+
+  - name: Look at some variables.
+    debug:
+      msg: "OSfamily={{ ansible_os_family }}"
+
+  - name: Set Hostname according to inventory name
+    ansible.builtin.hostname:
+      name: "{{ inventory_hostname }}"
+
+  - name: Creating the user {{ operator_operator }}
+    user:
+      name:  "{{ operator_operator }}"
+      create_home: true
+      move_home: true
+      shell: "/bin/bash"
+
+  - name: Add {{ operator_operator }} user to the sudoers
+    become: true
+    copy:
+      dest:  "/etc/sudoers.d/{{ operator_operator }}"
+      content:  "{{ operator_operator }}  ALL=(ALL)  NOPASSWD: ALL"
+
+  - name: Deploy SSH Key to remote Machine
+    ansible.posix.authorized_key:  user={{ operator_operator }}
+                      key="{{ operator_public_key }}"
+                      state=present
+
+
+  - name: Disable Password Authentication for all users
+    become: true
+    lineinfile:
+      path: /etc/ssh/sshd_config
+      regexp: "{{ item.regexp }}"
+      line: "{{ item.line }}"
+      state: present
+      backup: true
+    loop: 
+      - { regexp: "^PasswordAuthentication", line: "PasswordAuthentication no" }
+      - { regexp: "^PermitRootLogin", line: "PermitRootLogin no" }
+
+  - name: Include OS-specific variables.
+    include_vars: "{{ ansible_os_family }}.yml"
+
+
+  - name: include OS-specific tasks.
+    include_tasks: "{{ ansible_os_family }}.yml"

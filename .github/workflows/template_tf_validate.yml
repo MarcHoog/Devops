@@ -1,0 +1,43 @@
+name: Terraform Validate Template
+
+on:
+  workflow_call:
+    inputs:
+      working_directory:
+        required: true
+        type: string
+        description: "Terraform working directory"
+    secrets:
+      TF_GITHUB_TOKEN_PAT:
+        required: true
+      TF_AWS_ACCES_KEY_ID:
+        required: true
+      TF_AWS_SECRET_ACCESS_KEY:
+        required: true
+
+env:
+  TF_VERSION: 1.11.4
+
+jobs:
+  terraform-validate:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ inputs.working_directory }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Terraform Setup
+        uses: ./.github/actions/terraform-setup
+        with:
+          tf_version: ${{ env.TF_VERSION }}
+          github_token_pat: ${{ secrets.TF_GITHUB_TOKEN_PAT }}
+          aws_access_key_id: ${{ secrets.TF_AWS_ACCES_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.TF_AWS_SECRET_ACCESS_KEY }}
+
+      - name: Terraform Format Check
+        run: terraform fmt -check -recursive -diff
+
+      - name: Terraform Validate
+        run: terraform validate -no-color

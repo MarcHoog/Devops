@@ -1,0 +1,19 @@
+---
+  - name: debug
+    debug:
+      msg: Welcome in the Debian tasks File
+
+  - name: Update & Upgrade
+    ansible.builtin.apt:
+      name: '*'
+      update_cache: true
+      state: latest
+
+  - name: install packages using Apt
+    ansible.builtin.apt:
+      name: "{{ item }}"
+      state: latest
+      update_cache: true
+    loop:
+      - "{{ packages }}"
+      - "{{ os_specific_packages }}"

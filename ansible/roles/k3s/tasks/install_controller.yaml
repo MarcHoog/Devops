@@ -1,0 +1,19 @@
+- name: Check if K3s is installed
+  ansible.builtin.stat:
+    path: /usr/local/bin/k3s
+  register: k3s_bin
+
+- name: Install K3s master
+  ansible.builtin.shell: |
+    curl -sfL https://get.k3s.io | K3S_TOKEN={{ k3s_token }} sh -s - server
+  become: true
+  environment:
+    K3S_VERSION: "{{ k3s_version }}"
+  when: not k3s_bin.stat.exists
+  
+- name: Enable and start K3s server service
+  ansible.builtin.systemd:
+    name: k3s
+    enabled: yes
+    state: started
+  become: true

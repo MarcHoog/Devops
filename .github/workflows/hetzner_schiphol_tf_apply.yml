@@ -1,0 +1,16 @@
+name: Hetzner Schiphol | Run Terraform Apply
+
+on:
+  workflow_dispatch:
+
+jobs:
+  call-terraform:
+    uses: marchoog/devops/.github/workflows/template_tf_apply.yml@main
+    with:
+      tf_version: "1.5.7"
+      working_directory: "terraform/env/schiphol/env"
+    secrets:
+      TF_GITHUB_TOKEN_PAT: ${{ secrets.TF_GITHUB_TOKEN_PAT }}
+      TF_AWS_ACCES_KEY_ID: ${{ secrets.TF_AWS_ACCES_KEY_ID }}
+      TF_AWS_SECRET_ACCESS_KEY: ${{ secrets.TF_AWS_SECRET_ACCESS_KEY }}
+      TF_HETZNER_TOKEN: ${{ secrets.TF_HETZNER_TOKEN }}

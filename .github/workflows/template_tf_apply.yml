@@ -1,0 +1,53 @@
+name: Terraform Apply Template
+
+on:
+  workflow_call:
+    inputs:
+      tf_version:
+        required: true
+        type: string
+      working_directory:
+        required: true
+        type: string
+    secrets:
+      TF_GITHUB_TOKEN_PAT:
+        required: true
+      TF_AWS_ACCES_KEY_ID:
+        required: true
+      TF_AWS_SECRET_ACCESS_KEY:
+        required: true
+      TF_HETZNER_TOKEN:
+        required: true
+
+jobs:
+  terraform-apply:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ inputs.working_directory }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Terraform Setup
+        uses: ./.github/actions/terraform-setup
+        with:
+          tf_version: ${{ inputs.tf_version }}
+          github_token_pat: ${{ secrets.TF_GITHUB_TOKEN_PAT }}
+          aws_access_key_id: ${{ secrets.TF_AWS_ACCES_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.TF_AWS_SECRET_ACCESS_KEY }}
+          working_directory: ${{ inputs.working_directory }}
+
+      - name: Install Hcloud
+        run: |
+          curl -sSL https://github.com/hetznercloud/cli/releases/latest/download/hcloud-linux-amd64.tar.gz | tar -xz
+          sudo mv hcloud /usr/local/bin/hcloud
+          hcloud version
+
+      - name: Apply
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.TF_AWS_ACCES_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.TF_AWS_SECRET_ACCESS_KEY }}
+          HCLOUD_TOKEN: ${{ secrets.TF_HETZNER_TOKEN }}
+        run: |
+          terraform apply -auto-approve -input=false

@@ -1,0 +1,3 @@
+---
+os_specific_packages:
+  - speedtest-cli

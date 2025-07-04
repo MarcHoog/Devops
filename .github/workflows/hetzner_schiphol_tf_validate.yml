@@ -1,0 +1,16 @@
+name: Hetzner Schiphol | Terraform Validate on Push
+
+on:
+  push:
+    branches:
+      - '**'
+
+jobs:
+  call-terraform-validate:
+    uses: marchoog/devops/.github/workflows/template_tf_validate.yml@main
+    with:
+      working_directory: "./terraform/env/schiphol/env"
+    secrets:
+      TF_GITHUB_TOKEN_PAT: ${{ secrets.TF_GITHUB_TOKEN_PAT }}
+      TF_AWS_ACCES_KEY_ID: ${{ secrets.TF_AWS_ACCES_KEY_ID }}
+      TF_AWS_SECRET_ACCESS_KEY: ${{ secrets.TF_AWS_SECRET_ACCESS_KEY }}
