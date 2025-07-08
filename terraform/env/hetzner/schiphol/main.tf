@@ -18,7 +18,7 @@ module "singleNodeK3s" {
   server_name = "boeing747"
   image        = "ubuntu-24.04"
   server_type  = "cx22"
-  location     = "nbg1" # Example location; adjust as needed
+  location     = "nbg1" # Test!
   ssh_keys     = ["bubble", "ansible"]
   ipv4_enabled = true
   labels = {
