@@ -17,7 +17,7 @@ jobs:
     uses: marchoog/devops/.github/workflows/template_tf_destroy.yml@main
     with:
       create_snapshots: ${{ github.event.inputs.create_snapshots }}
-      working_directory: 'terraform/env/schiphol'
+      working_directory: 'terraform/env/hetzner/schiphol'
     secrets:
       TF_GITHUB_TOKEN_PAT: ${{ secrets.TF_GITHUB_TOKEN_PAT }}
       TF_AWS_ACCES_KEY_ID: ${{ secrets.TF_AWS_ACCES_KEY_ID }}
