@@ -6,7 +6,7 @@ on:
     branches:
       - '**'
     paths:
-      - 'terraform/env/schiphol/**'
+      - 'terraform/env/hetzner/schiphol/**'
 
 jobs:
   call-terraform-validate:
