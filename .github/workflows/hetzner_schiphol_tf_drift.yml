@@ -1,0 +1,18 @@
+name: Hetzner | Terraform Drift Check Template
+
+on:
+    schedule:
+        - cron: '0 3 * * *'  # Runs daily at 03:00 UTC
+
+
+jobs:
+  call-terraform:
+    uses: marchoog/devops/.github/workflows/template_tf_drift.yml@main
+    with:
+      tf_version: "1.5.7"
+      working_directory: "terraform/env/hetzner/schiphol"
+    secrets:
+      TF_GITHUB_TOKEN_PAT: ${{ secrets.TF_GITHUB_TOKEN_PAT }}
+      TF_AWS_ACCES_KEY_ID: ${{ secrets.TF_AWS_ACCES_KEY_ID }}
+      TF_AWS_SECRET_ACCESS_KEY: ${{ secrets.TF_AWS_SECRET_ACCESS_KEY }}
+      TF_HETZNER_TOKEN: ${{ secrets.TF_HETZNER_TOKEN }}
