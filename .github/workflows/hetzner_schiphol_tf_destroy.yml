@@ -16,6 +16,7 @@ jobs:
   call-terraform-destroy:
     uses: marchoog/devops/.github/workflows/template_tf_destroy.yml@main
     with:
+      tf_version: "1.5.7"
       create_snapshots: ${{ github.event.inputs.create_snapshots }}
       working_directory: 'terraform/env/hetzner/schiphol'
     secrets:

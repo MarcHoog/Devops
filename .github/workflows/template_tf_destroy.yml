@@ -7,6 +7,9 @@ on:
         required: true
         type: string
         description: 'Create Hetzner snapshots before destroy?'
+      tf_version:
+        required: true
+        type: string
       working_directory:
         required: true
         type: string
@@ -39,21 +42,17 @@ jobs:
 
       - name: Create Hetzner Snapshots
         if: ${{ inputs.create_snapshots == 'yes' }}
+        working-directory: /scripts
         env:
           HCLOUD_TOKEN: ${{ secrets.TF_HETZNER_TOKEN }}
         run: |
-          for server_info in $(hcloud server list -o noheader -o columns=id,name); do
-            id=$(echo $server_info | awk '{print $1}')
-            name=$(echo $server_info | awk '{print $2}')
-            description="vm-snapshot-$name"
-            echo "Creating snapshot for server $id with description: $description"
-            hcloud server create-image $id --description "$description"
-          done
+          python3 create_hetzner_snapshot.py
+          
 
       - name: Terraform Setup
         uses: ./.github/actions/terraform-setup
         with:
-          tf_version: ${{ env.TF_VERSION }}
+          tf_version: ${{ inputs.TF_VERSION }}
           github_token_pat: ${{ secrets.TF_GITHUB_TOKEN_PAT }}
           aws_access_key_id: ${{ secrets.TF_AWS_ACCES_KEY_ID }}
           aws_secret_access_key: ${{ secrets.TF_AWS_SECRET_ACCESS_KEY }}
