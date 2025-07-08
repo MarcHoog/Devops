@@ -13,8 +13,6 @@ terraform {
   }
 }
 
-
-
 module "singleNodeK3s" {
   source       = "git::https://github.com/MarcHoog/devops.git//terraform/mod/hetzner/server?ref=main"
   server_name = "boeing747"
@@ -25,7 +23,7 @@ module "singleNodeK3s" {
   ipv4_enabled = true
   labels = {
     "k3s": "controller"
-    "k3s": "flux_controller"
+    "k3s": "flux"
     "arch": "x86"
   }
 }

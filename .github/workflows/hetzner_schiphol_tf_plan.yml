@@ -14,8 +14,8 @@ jobs:
     with:
       working_directory: "./terraform/env/schiphol"
     secrets:
-      TF_GITHUB_TOKEN_PAT: ${{ secrets.SCHIPHOL_GITHUB_TOKEN_PAT }}
-      TF_AWS_ACCES_KEY_ID: ${{ secrets.SCHIPHOL_AWS_ACCES_KEY_ID }}
-      TF_AWS_SECRET_ACCESS_KEY: ${{ secrets.SCHIPHOL_AWS_SECRET_ACCESS_KEY }}
-      TF_HETZNER_TOKEN: ${{ secrets.SCHIPHOL_HETZNER_TOKEN }}
+      TF_GITHUB_TOKEN_PAT: ${{ secrets.TF_GITHUB_TOKEN_PAT }}
+      TF_AWS_ACCES_KEY_ID: ${{ secrets.TF_AWS_ACCES_KEY_ID }}
+      TF_AWS_SECRET_ACCESS_KEY: ${{ secrets.TF_AWS_SECRET_ACCESS_KEY }}
+      TF_HETZNER_TOKEN: ${{ secrets.TF_HETZNER_TOKEN }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
