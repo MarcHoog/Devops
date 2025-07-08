@@ -18,4 +18,3 @@ jobs:
       TF_AWS_ACCES_KEY_ID: ${{ secrets.TF_AWS_ACCES_KEY_ID }}
       TF_AWS_SECRET_ACCESS_KEY: ${{ secrets.TF_AWS_SECRET_ACCESS_KEY }}
       TF_HETZNER_TOKEN: ${{ secrets.TF_HETZNER_TOKEN }}
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
