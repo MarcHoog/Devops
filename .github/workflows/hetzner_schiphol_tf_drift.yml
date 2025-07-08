@@ -1,4 +1,4 @@
-name: Hetzner | Terraform Drift Check Template
+name: Schiphol | Terraform Drift Check Template
 
 on:
     schedule:

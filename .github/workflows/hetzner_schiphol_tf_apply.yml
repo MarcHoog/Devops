@@ -1,4 +1,4 @@
-name: Hetzner Schiphol | Run Terraform Apply
+name: Schiphol | Run Terraform Apply
 
 on:
   workflow_dispatch:

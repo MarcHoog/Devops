@@ -1,4 +1,4 @@
-name: Hetzner Schiphol | Terraform Plan on PR
+name: Schiphol | Terraform Plan on PR
 
 on:
   pull_request:

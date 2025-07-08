@@ -1,4 +1,4 @@
-name: Hetzner Schiphol | Terraform Validate on Push
+name: Schiphol | Terraform Validate on Push
 
 
 on:

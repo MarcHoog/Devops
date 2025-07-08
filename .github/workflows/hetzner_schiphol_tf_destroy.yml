@@ -1,4 +1,4 @@
-name: Hetzner Schiphol | Run Terraform Destroy
+name: Schiphol | Run Terraform Destroy
 
 on:
   workflow_dispatch:
