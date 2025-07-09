@@ -70,6 +70,7 @@ jobs:
           github_token_pat: ${{ secrets.TF_GITHUB_TOKEN_PAT }}
           aws_access_key_id: ${{ secrets.TF_AWS_ACCES_KEY_ID }}
           aws_secret_access_key: ${{ secrets.TF_AWS_SECRET_ACCESS_KEY }}
+          working_directory: ${{ inputs.working_directory }}
 
       - name: Terraform Destroy
         env:
