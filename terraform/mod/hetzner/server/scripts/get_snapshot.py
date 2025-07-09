@@ -4,7 +4,7 @@ import os, json, subprocess, argparse
 def lookup_snapshot(name):
     try:
         out = subprocess.check_output([
-            "hcloud", "image", "list", "--selector", "type=snapshot", "--output", "json"
+            "hcloud", "image", "list", "-t", "snapshot", "--output", "json"
         ])
         images = json.loads(out)
         for img in images:

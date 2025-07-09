@@ -4,7 +4,7 @@ from typing import Dict
 
 def lookup_snapshots() -> Dict:
     out = subprocess.check_output([
-        "hcloud", "image", "list", "--selector", "type=snapshot", "--output", "json"
+        "hcloud", "image", "list", "-t", "snapshot", "--output", "json"
     ])
     images = json.loads(out)
     return images
@@ -12,7 +12,7 @@ def lookup_snapshots() -> Dict:
 def delete_snapshot(snapshot_id) -> bool:
     try:
         subprocess.check_output([
-            "hcloud", "image", "delete", snapshot_id
+            "hcloud", "image", "delete", f"{snapshot_id}"
         ]
     )
         return True
@@ -30,7 +30,7 @@ def create_snapshot(machine: Dict) -> bool:
             "snapshot", 
             "--description",
             f"vm-snapshot-{machine['name']}",
-            machine["id"]
+            str(machine["id"])
         ])
     except subprocess.CalledProcessError as e:
         print("Exit code:", e.returncode)
@@ -41,7 +41,7 @@ def create_snapshot(machine: Dict) -> bool:
 
 def lookup_machines() -> Dict:
     out = subprocess.check_output([
-        "hcloud", "server", "list" "--output" "json " 
+        "hcloud", "server", "list", "--output", "json" 
     ])
     machines = json.loads(out)
     return machines
@@ -73,3 +73,5 @@ def main():
 
 
 
+if __name__ == "__main__":
+    main()
