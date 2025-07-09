@@ -18,7 +18,7 @@ module "singleNodeK3s" {
   server_name = "boeing747"
   image        = "ubuntu-24.04"
   server_type  = "cx22"
-  location     = "nbg1" # Test!!!
+  location     = "nbg1"
   ssh_keys     = ["bubble", "ansible"]
   ipv4_enabled = true
   labels = {
@@ -27,3 +27,19 @@ module "singleNodeK3s" {
     "arch": "x86"
   }
 }
+
+module "singleNodeK3s" {
+  source       = "git::https://github.com/MarcHoog/devops.git//terraform/mod/hetzner/server?ref=main"
+  server_name = "boeing777"
+  image        = "ubuntu-24.04"
+  server_type  = "cx22"
+  location     = "nbg1" 
+  ssh_keys     = ["bubble", "ansible"]
+  ipv4_enabled = true
+  labels = {
+    "k3s": "worker"
+    "k3s": "flux"
+    "arch": "x86"
+  }
+}
+
