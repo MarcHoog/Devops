@@ -26,22 +26,24 @@ on:
 
 jobs:
   hetzner-snapshots:
-    if: ${{ inputs.create_snapshots == 'yes' }}
     runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: ./scripts
     steps:
-      - name: Checkout repository
+      - if: ${{ inputs.create_snapshots == 'yes' }}
+        name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install Hcloud CLI
+      - if: ${{ inputs.create_snapshots == 'yes' }} 
+        name: Install Hcloud CLI
         run: |
           curl -sSL https://github.com/hetznercloud/cli/releases/latest/download/hcloud-linux-amd64.tar.gz | tar -xz
           sudo mv hcloud /usr/local/bin/hcloud
           hcloud version
 
-      - name: Create Hetzner Snapshots
+      - if: ${{ inputs.create_snapshots == 'yes' }}
+        name: Create Hetzner Snapshots
         env:
           HCLOUD_TOKEN: ${{ secrets.TF_HETZNER_TOKEN }}
         run: python3 create_hetzner_snapshot.py
