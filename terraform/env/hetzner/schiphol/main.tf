@@ -28,7 +28,7 @@ module "singleNodeK3s" {
   }
 }
 
-module "singleNodeK3s" {
+module "WorkerNode" {
   source       = "git::https://github.com/MarcHoog/devops.git//terraform/mod/hetzner/server?ref=main"
   server_name = "boeing777"
   image        = "ubuntu-24.04"
