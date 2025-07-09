@@ -55,6 +55,7 @@ def main():
 
     for m in machines:
         name = m["name"]
+        print(f"machine {name}")
         if name in snapshot_descriptions:
             print("Deleting existing Snapshot of Machine ")
             deleted = delete_snapshot(snapshot_descriptions[name])
@@ -62,6 +63,7 @@ def main():
                 print("Couldn't delete snapshot so skipping creating a new one")
                 continue
 
+        print("attempting to create snapshots")
         created = create_snapshot(m)
         if not created:
             print("Something went wrong creating a new Image")
