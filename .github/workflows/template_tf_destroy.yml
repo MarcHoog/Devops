@@ -42,7 +42,7 @@ jobs:
 
       - name: Create Hetzner Snapshots
         if: ${{ inputs.create_snapshots == 'yes' }}
-        working-directory: /scripts
+        working-directory: ./scripts
         env:
           HCLOUD_TOKEN: ${{ secrets.TF_HETZNER_TOKEN }}
         run: |
