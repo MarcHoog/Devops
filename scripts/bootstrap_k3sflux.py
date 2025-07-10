@@ -5,14 +5,6 @@ Bootstrap a single-node K3s cluster with FluxCD using a personal GitHub repo.
 This script ensures idempotency: safe to run multiple times.
 It installs K3s and Flux only if missing, and bootstraps Flux
 only if it’s not already configured in the cluster.
-
-To run:
-
-curl -O https://raw.githubusercontent.com/MarcHoog/Devops/main/scripts/bootstrap_k3sflux.py
-chmod +x bootstrap_k3s_with_flux.py
-./bootstrap_k3s_with_flux.py
-rm ./bootstrap_k3s_with_flux.py
-
 """
 
 import os
