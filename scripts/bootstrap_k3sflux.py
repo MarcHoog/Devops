@@ -35,7 +35,7 @@ def print_error(msg):
     print(f"\033[91m❌ {msg}\033[0m")
 
 
-def run_command(cmd, check=True, capture_output=False, **kwargs):
+def run_command(cmd, check=True, capture_output=False, raise_error=False, **kwargs):
     """
     Run a system command and handle errors.
 
@@ -56,6 +56,9 @@ def run_command(cmd, check=True, capture_output=False, **kwargs):
             **kwargs
         )
     except subprocess.CalledProcessError as e:
+        if raise_error:
+            raise e
+
         print_error(f"Command failed: {' '.join(cmd)}")
         if e.stderr:
             print_error(e.stderr.strip())
@@ -139,7 +142,7 @@ def is_flux_bootstrapped():
         bool: True if bootstrapped.
     """
     try:
-        result = run_command(["flux", "check"], capture_output=True)
+        result = run_command(["flux", "check"], capture_output=True, raise_error=True)
         return "install success" in result.stdout.lower()
     except Exception:
         return False
@@ -194,7 +197,7 @@ def main():
         "GH_PATH", "Flux path in repository [e.g. clusters/dev]"
     )
 
-    kubeconfig = validate_env_var(
+    validate_env_var(
         "KUBECONFIG", "Kubeconfig path [e.g. /etc/rancher/k3s/k3s.yaml]"
     )
 
