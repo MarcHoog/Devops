@@ -8,7 +8,7 @@ only if it’s not already configured in the cluster.
 
 To run:
 
-curl -s https://raw.githubusercontent.com/myuser/k3s-bootstrap/main/bootstrap_flux_k3s.py | python3 -
+curl -s https://raw.githubusercontent.com/MarcHoog/Devops/refs/heads/main/scripts/bootstrap_k3s_with_flux.py | python3 -
 
 """
 
