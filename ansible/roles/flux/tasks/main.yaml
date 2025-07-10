@@ -1,5 +1,5 @@
 
-- name: Check if K3s is installed
+- name: Check if Flux CLI is installed
   ansible.builtin.stat:
     path: /usr/local/bin/flux
   register: flux_bin
@@ -13,9 +13,10 @@
   register: flux_bootstrap
   ansible.builtin.script: bootstrap_flux.sh
   environment:
-    KUBECONFIG: 
+    KUBECONFIG: {{ kubeconfig_path }}
     GITHUB_TOKEN: "{{ lookup('env', 'GITHUB_TOKEN') }}"
     GH_USERNAME: {{ github_owner }}
     GH_REPOSITORY: {{ github_repo }}
     GH_BRANCH: {{ github_branch }}
     GH_PATH: {{ github_path }}
+  when: not flux_bin.stat.exists
