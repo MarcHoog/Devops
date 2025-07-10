@@ -1,4 +1,3 @@
-set -eux pipefail
 TMP_SCRIPT=$(mktemp /tmp/bootstrap_flux.XXXXXX.py)
 cleanup() {
   rm -f "$TMP_SCRIPT"
