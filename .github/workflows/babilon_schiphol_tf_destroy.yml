@@ -17,6 +17,7 @@ jobs:
     uses: marchoog/devops/.github/workflows/template_tf_destroy.yml@main
     with:
       tf_version: "1.5.7"
+      tf_key: "tfstate/babilon"
       create_snapshots: ${{ github.event.inputs.create_snapshots }}
       working_directory: 'terraform/env/hetzner/babilon'
     secrets:
