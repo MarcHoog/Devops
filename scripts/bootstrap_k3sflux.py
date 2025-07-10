@@ -145,7 +145,7 @@ def is_flux_bootstrapped():
         return False
 
 
-def bootstrap_flux(github_owner, github_repo, github_branch, github_path, kube):
+def bootstrap_flux(github_owner, github_repo, github_branch, github_path):
     """
     Bootstrap Flux into the Kubernetes cluster.
 
