@@ -1,2 +1,0 @@
-- name: Include controller tasks
-  ansible.builtin.include_tasks: install_controller.yaml
