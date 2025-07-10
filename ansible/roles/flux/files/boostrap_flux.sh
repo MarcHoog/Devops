@@ -3,6 +3,10 @@ set -euo pipefail
 
 echo "📦 Bootstrapping Flux into cluster..."
 
+curl -s https://fluxcd.io/install.sh | sudo bash
+
+curl -sfL https://get.k3s.io | sh -
+
 flux bootstrap github \
   --token-auth \
   --owner=$GH_USERNAME \
