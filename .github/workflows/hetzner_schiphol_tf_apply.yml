@@ -8,6 +8,7 @@ jobs:
     uses: marchoog/devops/.github/workflows/template_tf_apply.yml@main
     with:
       tf_version: "1.5.7"
+      tf_key: "tfstate/schiphol"
       working_directory: "terraform/env/hetzner/schiphol"
     secrets:
       TF_GITHUB_TOKEN_PAT: ${{ secrets.TF_GITHUB_TOKEN_PAT }}

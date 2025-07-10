@@ -13,7 +13,7 @@ terraform {
   }
 }
 
-module "singleNodeK3s" {
+module "MasterNode" {
   source       = "git::https://github.com/MarcHoog/devops.git//terraform/mod/hetzner/server?ref=main"
   server_name = "boeing747"
   image        = "ubuntu-24.04"
