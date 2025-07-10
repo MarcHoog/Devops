@@ -7,6 +7,9 @@ on:
         required: true
         type: string
         description: "Terraform working directory"
+      tf_key:
+        required: true
+        type: string
     secrets:
       TF_GITHUB_TOKEN_PAT:
         required: true
@@ -34,6 +37,7 @@ jobs:
         uses: ./.github/actions/terraform-setup
         with:
           tf_version: ${{ env.TF_VERSION }}
+          tf_key: ${{ inputs.tf_key }}
           github_token_pat: ${{ secrets.TF_GITHUB_TOKEN_PAT }}
           aws_access_key_id: ${{ secrets.TF_AWS_ACCES_KEY_ID }}
           aws_secret_access_key: ${{ secrets.TF_AWS_SECRET_ACCESS_KEY }}

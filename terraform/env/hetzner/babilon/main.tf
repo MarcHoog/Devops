@@ -15,7 +15,7 @@ terraform {
 
 module "singleNodeK3s" {
   source       = "git::https://github.com/MarcHoog/devops.git//terraform/mod/hetzner/server?ref=main"
-  server_name = ""
+  server_name = "boeing747"
   image        = "ubuntu-24.04"
   server_type  = "cx22"
   location     = "nbg1"

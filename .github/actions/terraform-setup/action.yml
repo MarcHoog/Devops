@@ -11,6 +11,8 @@ inputs:
     required: true
   working_directory:
     required: true
+  tf_key:
+    required: true
 
 runs:
   using: "composite"
