@@ -167,11 +167,11 @@ def bootstrap_flux(github_owner, github_repo, github_branch, github_path):
     run_command([
         "flux", "bootstrap", "github",
         "--token-auth",
-        f"--owner={github_owner}"
-        f"--repository={github_repo}"
-        f"--branch={github_branch}"
-        f"--path={github_path}"
-        "--personal"
+        f"--owner={github_owner}",
+        f"--repository={github_repo}",
+        f"--branch={github_branch}",
+        f"--path={github_path}",
+        "--personal",
     ])
 
     print_success(
