@@ -125,6 +125,9 @@ def validate_env_var(name, prompt=None, secret=False):
         if not val:
             print_error(f"{name} is required.")
             sys.exit(1)
+
+    os.environ[name] = val
+
     return val
 
 
@@ -142,7 +145,7 @@ def is_flux_bootstrapped():
         return False
 
 
-def bootstrap_flux(github_owner, github_repo, github_branch, github_path):
+def bootstrap_flux(github_owner, github_repo, github_branch, github_path, kube):
     """
     Bootstrap Flux into the Kubernetes cluster.
 
@@ -160,10 +163,6 @@ def bootstrap_flux(github_owner, github_repo, github_branch, github_path):
     run_command([
         "flux", "bootstrap", "github",
         "--token-auth",
-        "--owner", github_owner,
-        "--repository", github_repo,
-        "--branch", github_branch,
-        "--path", github_path,
         "--personal"
     ])
 
@@ -194,6 +193,11 @@ def main():
     github_path = validate_env_var(
         "GH_PATH", "Flux path in repository [e.g. clusters/dev]"
     )
+
+    kubeconfig = validate_env_var(
+        "KUBECONFIG", "Kubeconfig path [e.g. /etc/rancher/k3s/k3s.yaml]"
+    )
+
 
     install_flux()
     install_k3s()
