@@ -1,4 +1,4 @@
-name: Schiphol | Run Terraform Destroy
+name: Babilon | Run Terraform Destroy
 
 on:
   workflow_dispatch:

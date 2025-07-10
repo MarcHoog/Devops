@@ -1,4 +1,4 @@
-name: Schiphol | Run Terraform Apply
+name: Babilon | Run Terraform Apply
 
 on:
   workflow_dispatch:

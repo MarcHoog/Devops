@@ -1,4 +1,4 @@
-name: Schiphol | Terraform Plan on PR
+name: Babilon | Terraform Plan on PR
 
 on:
   pull_request:
