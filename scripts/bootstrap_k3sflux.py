@@ -108,7 +108,7 @@ def install_k3s():
     ])
 
 
-def validate_env_var(name, prompt=None, secret=False):
+def validate_env_var(name, prompt=None, secret=False, set_env=False):
     """
     Ensure an environment variable is set or ask user.
 
@@ -129,7 +129,8 @@ def validate_env_var(name, prompt=None, secret=False):
             print_error(f"{name} is required.")
             sys.exit(1)
 
-    os.environ[name] = val
+    if set_env:
+        os.environ[name] = val
 
     return val
 
@@ -166,6 +167,10 @@ def bootstrap_flux(github_owner, github_repo, github_branch, github_path):
     run_command([
         "flux", "bootstrap", "github",
         "--token-auth",
+        f"--owner={github_owner}"
+        f"--repository={github_repo}"
+        f"--branch={github_branch}"
+        f"--path={github_path}"
         "--personal"
     ])
 
@@ -198,7 +203,7 @@ def main():
     )
 
     validate_env_var(
-        "KUBECONFIG", "Kubeconfig path [e.g. /etc/rancher/k3s/k3s.yaml]"
+        "KUBECONFIG", "Kubeconfig path [e.g. /etc/rancher/k3s/k3s.yaml]", set_env=True
     )
 
 
