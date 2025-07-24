@@ -57,3 +57,11 @@ python scripts/deploy_app.py ... > deploy.log 2>&1
    if __name__ == "__main__":
        main()
    ```
+## Usage
+
+* `deploy_wireguard.py` - Deploys a simple WireGuard VPN and manage clients.
+  Example:
+  ```bash
+  sudo python3 scripts/deploy_wireguard.py deploy --endpoint YOUR_PUBLIC_IP
+  sudo python3 scripts/deploy_wireguard.py add-client --name alice --endpoint YOUR_PUBLIC_IP
+  ```
