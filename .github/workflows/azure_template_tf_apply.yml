@@ -18,6 +18,9 @@ on:
       working_directory:
         required: true
         type: string
+      environment:
+        required: true
+        type: string
     secrets:
       TF_GITHUB_TOKEN_PAT:
         required: true
@@ -30,6 +33,7 @@ on:
 
 jobs:
   terraform-apply:
+    environment: ${{ inputs.environment }}
     runs-on: ubuntu-latest
     defaults:
       run:

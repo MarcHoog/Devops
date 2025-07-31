@@ -11,6 +11,7 @@ jobs:
       tf_container_name: tf-state
       tf_version: "1.11.4"
       working_directory: "terraform/env/azure/hoogendoorn_payed"
+      environment: prod
     secrets:
       TF_GITHUB_TOKEN_PAT: ${{ secrets.TF_GITHUB_TOKEN_PAT }}
       AZURE_CLIENT_ID: ${{ secrets.TF_AZURE_CLIENT_ID }}
