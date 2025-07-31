@@ -5,7 +5,7 @@ on:
 
 jobs:
   call-terraform:
-    uses: marchoog/devops/.github/workflows/template_tf_apply.yml@main
+    uses: marchoog/devops/.github/workflows/hetzner_template_tf_apply.yml@main
     with:
       tf_version: "1.5.7"
       tf_key: "tfstate/babilon"

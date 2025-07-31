@@ -1,0 +1,57 @@
+name: Terraform Apply (Azure)
+
+on:
+  workflow_call:
+    inputs:
+      tf_version:
+        required: true
+        type: string
+      tf_key:
+        required: true
+        type: string
+      tf_storage_account:
+        required: true
+        type: string
+      tf_container_name:
+        required: true
+        type: string
+      working_directory:
+        required: true
+        type: string
+    secrets:
+      TF_GITHUB_TOKEN_PAT:
+        required: true
+      AZURE_CLIENT_ID:
+        required: true
+      AZURE_TENANT_ID:
+        required: true
+      AZURE_SUBSCRIPTION_ID:
+        required: true
+
+jobs:
+  terraform-apply:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ inputs.working_directory }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Reuse your composite action that logs into Azure and runs `terraform init` with azurerm backend.
+      - name: Terraform Setup (Azure)
+        uses: ./.github/actions/azure-terraform-setup
+        with:
+          tf_version: ${{ inputs.tf_version }}
+          github_token_pat: ${{ secrets.TF_GITHUB_TOKEN_PAT }}
+          azure_client_id: ${{ secrets.AZURE_CLIENT_ID }}
+          azure_tenant_id: ${{ secrets.AZURE_TENANT_ID }}
+          azure_subscription_id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          tf_storage_account: ${{ inputs.tf_storage_account }}
+          tf_container_name: ${{ inputs.tf_container_name }}
+          tf_key: ${{ inputs.tf_key }}
+          working_directory: ${{ inputs.working_directory }}
+
+      - name: Terraform Apply
+        run: terraform apply -auto-approve -input=false

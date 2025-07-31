@@ -9,21 +9,21 @@ terraform {
   }
 
 
-  backend  "s3" {
+  backend "s3" {
   }
 }
 
 module "singleNodeK3s" {
-  source       = "git::https://github.com/MarcHoog/devops.git//terraform/mod/hetzner/server?ref=main"
-  server_name = ""
+  source       = "git::https://github.com/MarcHoog/devops.git//tf-building-blocks/hetzner/server?ref=main"
+  server_name  = ""
   image        = "ubuntu-24.04"
   server_type  = "cx22"
   location     = "nbg1"
   ssh_keys     = ["bubble", "ansible"]
   ipv4_enabled = true
   labels = {
-    "k3s": "controller"
-    "k3s": "flux"
-    "arch": "x86"
+    "k3s" : "controller"
+    "k3s" : "flux"
+    "arch" : "x86"
   }
 }

@@ -4,22 +4,22 @@ on:
   workflow_dispatch:
     inputs:
       create_snapshots:
-        description: 'Create Hetzner snapshots before destroy?'
+        description: "Create Hetzner snapshots before destroy?"
         required: true
-        default: 'no'
+        default: "no"
         type: choice
         options:
-          - 'yes'
-          - 'no'
+          - "yes"
+          - "no"
 
 jobs:
   call-terraform-destroy:
-    uses: marchoog/devops/.github/workflows/template_tf_destroy.yml@main
+    uses: marchoog/devops/.github/workflows/hetzner_template_tf_destroy.yml@main
     with:
       tf_version: "1.5.7"
       tf_key: "tfstate/schiphol"
       create_snapshots: ${{ github.event.inputs.create_snapshots }}
-      working_directory: 'terraform/env/hetzner/schiphol'
+      working_directory: "terraform/env/hetzner/schiphol"
     secrets:
       TF_GITHUB_TOKEN_PAT: ${{ secrets.TF_GITHUB_TOKEN_PAT }}
       TF_AWS_ACCES_KEY_ID: ${{ secrets.TF_AWS_ACCES_KEY_ID }}

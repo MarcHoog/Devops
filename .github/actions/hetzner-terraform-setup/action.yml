@@ -1,5 +1,5 @@
-name: 'Terraform Setup'
-description: 'Shared Terraform init and environment setup'
+name: "Terraform Setup"
+description: "Shared Terraform init and environment setup"
 inputs:
   tf_version:
     required: true
@@ -42,4 +42,3 @@ runs:
           -backend-config="skip_region_validation=true" \
       shell: bash
       working-directory: ${{ inputs.working_directory }}
-

@@ -6,7 +6,7 @@ on:
       create_snapshots:
         required: true
         type: string
-        description: 'Create Hetzner snapshots before destroy?'
+        description: "Create Hetzner snapshots before destroy?"
       tf_version:
         required: true
         type: string
@@ -16,7 +16,7 @@ on:
       working_directory:
         required: true
         type: string
-        description: 'Working directory for terraform commands'
+        description: "Working directory for terraform commands"
     secrets:
       TF_GITHUB_TOKEN_PAT:
         required: true
@@ -38,7 +38,7 @@ jobs:
         name: Checkout repository
         uses: actions/checkout@v4
 
-      - if: ${{ inputs.create_snapshots == 'yes' }} 
+      - if: ${{ inputs.create_snapshots == 'yes' }}
         name: Install Hcloud CLI
         run: |
           curl -sSL https://github.com/hetznercloud/cli/releases/latest/download/hcloud-linux-amd64.tar.gz | tar -xz
@@ -50,7 +50,6 @@ jobs:
         env:
           HCLOUD_TOKEN: ${{ secrets.TF_HETZNER_TOKEN }}
         run: python3 create_hetzner_snapshot.py
-  
 
   terraform-destroy:
     needs: hetzner-snapshots
@@ -69,7 +68,7 @@ jobs:
           hcloud version
 
       - name: Terraform Setup
-        uses: ./.github/actions/terraform-setup
+        uses: ./.github/actions/hetzner-terraform-setup
         with:
           tf_version: ${{ inputs.TF_VERSION }}
           tf_key: ${{ inputs.tf_key }}

@@ -33,7 +33,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Terraform Setup
-        uses: ./.github/actions/terraform-setup
+        uses: ./.github/actions/hetzner-terraform-setup
         with:
           tf_version: ${{ inputs.tf_version }}
           tf_key: ${{ inputs.tf_key }}

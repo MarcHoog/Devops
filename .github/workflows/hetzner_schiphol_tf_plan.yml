@@ -6,11 +6,11 @@ on:
       - main
     types: [opened, synchronize, reopened]
     paths:
-      - 'terraform/env/hetzner/schiphol/**'
+      - "terraform/env/hetzner/schiphol/**"
 
 jobs:
   call-terraform-plan:
-    uses: marchoog/devops/.github/workflows/template_tf_plan.yml@main
+    uses: marchoog/devops/.github/workflows/hetzner_template_tf_plan.yml@main
     with:
       tf_key: "tfstate/schiphol"
       working_directory: "terraform/env/hetzner/schiphol"
