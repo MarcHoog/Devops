@@ -13,6 +13,6 @@ terraform {
 }
 
 module "resourcegroup" {
-  source = "git::https://github.com/MarcHoog/devops.git//tf-building-blocks/azure/resource_group?ref=main"
+  source = "git::https://github.com/MarcHoog/devops.git//tf-building-blocks/azure/resource-group?ref=main"
   name   = "test123"
 }
