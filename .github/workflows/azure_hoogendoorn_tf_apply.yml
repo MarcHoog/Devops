@@ -6,7 +6,7 @@ permissions:
   id-token: write
   contents: read
 jobs:
-  call-terraform-plan:
+  call-terraform-apply:
     uses: marchoog/devops/.github/workflows/azure_template_tf_apply.yml@main
     with:
       tf_key: "tfstate/subscription/hoogendoorn-payed"
