@@ -8,6 +8,9 @@ on:
     paths:
       - "terraform/env/hetzner/schiphol/**"
 
+permissions:
+  id-token: write
+  contents: read
 jobs:
   call-terraform-validate:
     uses: marchoog/devops/.github/workflows/hetzner_template_tf_validate.yml@main

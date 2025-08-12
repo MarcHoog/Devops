@@ -3,6 +3,9 @@ name: Schiphol | Run Terraform Apply
 on:
   workflow_dispatch:
 
+permissions:
+  id-token: write
+  contents: read
 jobs:
   call-terraform:
     uses: marchoog/devops/.github/workflows/hetzner_template_tf_apply.yml@main
