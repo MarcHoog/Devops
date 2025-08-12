@@ -68,6 +68,7 @@ jobs:
         run: python3 create_hetzner_snapshot.py
 
   terraform-destroy:
+    environment: ${{ inputs.environment }}
     needs: hetzner-snapshots
     runs-on: ubuntu-latest
     defaults:
