@@ -42,6 +42,7 @@ env:
 
 jobs:
   terraform-validate:
+    environment: ${{ inputs.environment }}
     runs-on: ubuntu-latest
     defaults:
       run:

@@ -43,6 +43,7 @@ env:
 
 jobs:
   terraform-plan:
+    environment: ${{ inputs.environment }}
     runs-on: ubuntu-latest
     defaults:
       run:
