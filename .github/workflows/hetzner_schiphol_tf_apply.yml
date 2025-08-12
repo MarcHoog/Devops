@@ -10,7 +10,8 @@ jobs:
       tf_key: "tfstate/hetzner/schiphol"
       tf_storage_account: saiaceun
       tf_container_name: tf-state
-      working_directory: "terraform/schiphol"
+      working_directory: "tf-environments/schiphol"
+      environment: prod
     secrets:
       TF_GITHUB_TOKEN_PAT: ${{ secrets.TF_GITHUB_TOKEN_PAT }}
       AZURE_CLIENT_ID: ${{ secrets.TF_AZURE_CLIENT_ID }}

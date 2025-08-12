@@ -19,6 +19,9 @@ on:
         required: true
         type: string
         description: "Azure Storage container used for TF state backend"
+      environment:
+        required: true
+        type: string
       tf_version:
         required: false
         type: string

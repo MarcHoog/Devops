@@ -23,6 +23,9 @@ on:
         required: false
         type: string
         default: "1.11.4"
+      environment:
+        required: true
+        type: string
     secrets:
       TF_GITHUB_TOKEN_PAT:
         required: true
@@ -35,6 +38,7 @@ on:
 
 jobs:
   terraform-plan:
+    environment: ${{ inputs.environment }}
     runs-on: ubuntu-latest
     defaults:
       run:
