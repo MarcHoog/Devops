@@ -6,12 +6,18 @@ terraform {
       source  = "hetznercloud/hcloud"
       version = ">= 1.49.1"
     }
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = ">= 3.110.0"
+    }
   }
 
 
-  backend "s3" {
+  backend "azurerm" {
   }
 }
+
+
 
 module "singleNodeK3s" {
   source       = "git::https://github.com/MarcHoog/devops.git//tf-building-blocks/hetzner/server?ref=main"
