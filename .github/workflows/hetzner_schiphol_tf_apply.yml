@@ -7,11 +7,13 @@ jobs:
   call-terraform:
     uses: marchoog/devops/.github/workflows/hetzner_template_tf_apply.yml@main
     with:
-      tf_version: "1.5.7"
-      tf_key: "tfstate/schiphol"
-      working_directory: "terraform/env/hetzner/schiphol"
+      tf_key: "tfstate/hetzner/schiphol"
+      tf_storage_account: saiaceun
+      tf_container_name: tf-state
+      working_directory: "terraform/schiphol"
     secrets:
       TF_GITHUB_TOKEN_PAT: ${{ secrets.TF_GITHUB_TOKEN_PAT }}
-      TF_AWS_ACCES_KEY_ID: ${{ secrets.TF_AWS_ACCES_KEY_ID }}
-      TF_AWS_SECRET_ACCESS_KEY: ${{ secrets.TF_AWS_SECRET_ACCESS_KEY }}
+      AZURE_CLIENT_ID: ${{ secrets.TF_AZURE_CLIENT_ID }}
+      AZURE_TENANT_ID: ${{ secrets.TF_AZURE_TENANT_ID }}
+      AZURE_SUBSCRIPTION_ID: ${{ secrets.TF_AZURE_SUBSCRIPTION_ID }}
       TF_HETZNER_TOKEN: ${{ secrets.TF_HETZNER_TOKEN }}

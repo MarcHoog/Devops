@@ -6,7 +6,7 @@ on:
       - main
     types: [opened, synchronize, reopened]
     paths:
-      - "terraform/env/azure/hoogendoorn/**"
+      - "terraform/hoogendoorn/**"
 
 jobs:
   call-terraform-plan:
@@ -15,7 +15,7 @@ jobs:
       tf_key: "tfstate/subscription/hoogendoorn-payed"
       tf_storage_account: saiaceun
       tf_container_name: tf-state
-      working_directory: "terraform/env/azure/hoogendoorn"
+      working_directory: "terraform/hoogendoorn"
     secrets:
       TF_GITHUB_TOKEN_PAT: ${{ secrets.TF_GITHUB_TOKEN_PAT }}
       AZURE_CLIENT_ID: ${{ secrets.TF_AZURE_CLIENT_ID }}
