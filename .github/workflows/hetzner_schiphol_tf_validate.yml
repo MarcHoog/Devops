@@ -21,4 +21,4 @@ jobs:
       AZURE_CLIENT_ID: ${{ secrets.TF_AZURE_CLIENT_ID }}
       AZURE_TENANT_ID: ${{ secrets.TF_AZURE_TENANT_ID }}
       AZURE_SUBSCRIPTION_ID: ${{ secrets.TF_AZURE_SUBSCRIPTION_ID }}
-      TF_AWS_SECRET_ACCESS_KEY: ${{ secrets.TF_AWS_SECRET_ACCESS_KEY }}
+      TF_HETZNER_TOKEN: ${{ secrets.TF_HETZNER_TOKEN }}
