@@ -1,0 +1,18 @@
+{
+  "listOfAllowedLocations": {
+    "type": "Array",
+    "metadata": {
+      "displayName": "Allowed locations",
+      "description": "The list of locations where resources are permitted."
+    }
+  },
+  "effect": {
+    "type": "String",
+    "metadata": {
+      "displayName": "Effect",
+      "description": "Deny, Audit, or Disabled."
+    },
+    "allowedValues": [ "Deny", "Audit", "Disabled" ],
+    "defaultValue": "Deny"
+  }
+}
