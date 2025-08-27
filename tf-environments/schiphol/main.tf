@@ -43,23 +43,9 @@ module "TalosNode1" {
     ssh_in = {
       direction   = "in"
       protocol    = "tcp"
-      port        = "22"
+      port        = "6443"
       ips         = ["0.0.0.0/0", "::/0"]
       description = "Allow SSH"
-    }
-    http_in = {
-      direction = "in"
-      protocol  = "tcp"
-      port      = "80"
-      ips       = ["0.0.0.0/0", "::/0"]
-      description = "Allow HTTP"
-    }
-    https_in = {
-      direction = "in"
-      protocol  = "tcp"
-      port      = "443"
-      ips       = ["0.0.0.0/0", "::/0"]
-      description = "Allow HTTPS"
     }
     icmp_in = {
       direction = "in"
