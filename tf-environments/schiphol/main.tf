@@ -47,6 +47,14 @@ module "TalosNode1" {
       ips         = ["0.0.0.0/0", "::/0"]
       description = "Allow SSH"
     }
+    talos_management = {
+      direction = "in"
+      protocol = "tcp"
+      port = "50000"
+      ips = ["91.180.39.10"]
+      description = "Allow Talos Management plane"
+    }
+
     icmp_in = {
       direction = "in"
       protocol  = "icmp"
