@@ -22,8 +22,8 @@ terraform {
 module "nixOS" {
   source       = "git::https://github.com/MarcHoog/devops.git//tf-building-blocks/hetzner/server?ref=main"
 
-  server_name  = "opensuse"
-  image        = "opensuse-leap-15.6" 
+  server_name  = "ubuntox-01"
+  image        = "ubuntu-24.04" 
   server_type  = "cx22"
   location     = "nbg1"
   ssh_keys     = ["bubble", "ansible"]
@@ -38,7 +38,7 @@ module "nixOS" {
 
   # Firewall
   enable_firewall = true
-  firewall_name   = "opensuse-fw"
+  firewall_name   = "ubuntox-01-fw"
   firewall_rules = {
     ssh_in = {
       direction   = "in"

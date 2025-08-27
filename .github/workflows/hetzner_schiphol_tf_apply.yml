@@ -2,7 +2,10 @@ name: Schiphol | Run Terraform Apply
 
 on:
   workflow_dispatch:
-
+  push:
+    branches:
+      - main
+      
 permissions:
   id-token: write
   contents: read
