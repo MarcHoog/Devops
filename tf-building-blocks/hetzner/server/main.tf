@@ -1,28 +1,6 @@
-# TODO This still doesn't go very lekker tbh
-resource "null_resource" "get_snapshot" {
-  triggers = {
-    always_run = timestamp()
-  }
-
-  provisioner "local-exec" {
-    command = <<-EOT
-      mkdir -p "${path.module}/tmp"
-      python3 "${path.module}/scripts/get_snapshot.py" \
-        --name "${var.server_name}" \
-        --output "${path.module}/tmp/${var.server_name}_snap.txt"
-    EOT
-  }
-
-}
-
-data "local_file" "snapshot_id" {
-  depends_on = [null_resource.get_snapshot]
-  filename   = "${path.module}/tmp/${var.server_name}_snap.txt"
-}
-
 resource "hcloud_server" "server" {
   name        = var.server_name
-  image       = local.snapshot_id != "" ? local.snapshot_id : var.image
+  image       = var.image
   server_type = var.server_type
   location    = var.location
   ssh_keys    = var.ssh_keys
