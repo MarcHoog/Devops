@@ -19,12 +19,12 @@ terraform {
 
 
 
-module "nixOS" {
+module "TalosNode1" {
   source       = "git::https://github.com/MarcHoog/devops.git//tf-building-blocks/hetzner/server?ref=main"
 
-  server_name  = "ubuntox-01"
-  image        = "ubuntu-24.04" 
-  server_type  = "cx22"
+  server_name  = "boeing-737"
+  image        = "312961706" 
+  server_type  = "cx32"
   location     = "nbg1"
   ssh_keys     = ["bubble", "ansible"]
   ipv4_enabled = true
@@ -38,7 +38,7 @@ module "nixOS" {
 
   # Firewall
   enable_firewall = true
-  firewall_name   = "ubuntox-01-fw"
+  firewall_name   = "boeing-737-fw"
   firewall_rules = {
     ssh_in = {
       direction   = "in"
