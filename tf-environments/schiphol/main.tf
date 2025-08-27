@@ -19,7 +19,7 @@ terraform {
 
 
 
-module "singleNodeK3s" {
+module "nixOS" {
   source       = "git::https://github.com/MarcHoog/devops.git//tf-building-blocks/hetzner/server?ref=main"
   server_name  = "bob"
   image        = "ubuntu-24.04"
