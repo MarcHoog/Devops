@@ -172,7 +172,7 @@ def main() -> None:
     sub = parser.add_subparsers(dest="command", required=True)
 
     d = sub.add_parser("deploy", help="Deploy server")
-    d.add_argument("--address", default="10.8.0.1/24")
+    d.add_argument("--address", default=DEFAULT_NET)
     d.add_argument("--listen-port", type=int, default=DEFAULT_PORT)
 
     add = sub.add_parser("add-client", help="Create a client configuration")
