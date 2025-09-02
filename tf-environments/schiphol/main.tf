@@ -44,6 +44,13 @@ module "TalosNode1" {
       ips         = ["0.0.0.0/0", "::/0"]
       description = "Allow SSH"
     }
+    wireguard_in = {
+      direction = "in"
+      protocol  = "udp"
+      port      = "51820"
+      ips       = ["0.0.0.0/0", "::/0"]
+      description = "Allow WireGuard"
+    }
     icmp_in = {
       direction = "in"
       protocol  = "icmp"
