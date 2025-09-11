@@ -40,22 +40,8 @@ module "WindowsNodePoc" {
       direction   = "in"
       protocol    = "tcp"
       port        = "22"
-      ips         = ["0.0.0.0/0", "::/0"]
+      ips         = ["188.245.213.214"]
       description = "Allow SSH"
-    }
-    winrm_in = {
-      direction   = "in"
-      protocol    = "tcp"
-      port        = "5985"
-      ips         = ["0.0.0.0/0", "::/0"]
-      description = "Allow Winrm "
-    }
-    winrm_ssl_in = {
-      direction   = "in"
-      protocol    = "tcp"
-      port        = "5986"
-      ips         = ["0.0.0.0/0", "::/0"]
-      description = "Allow Winrm SSL"
     }
     icmp_in = {
       direction = "in"
