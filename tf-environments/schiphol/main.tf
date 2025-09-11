@@ -18,7 +18,7 @@ terraform {
 }
 
 
-module "TalosNode1" {
+module "WindowsNodePoc" {
   source       = "git::https://github.com/MarcHoog/devops.git//tf-building-blocks/hetzner/server?ref=main"
 
   server_name  = "boeing-777"
