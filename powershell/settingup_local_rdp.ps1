@@ -1,8 +1,4 @@
-[CmdletBinding()]
-param (
-    [Parameter(Mandatory = $true)]
-    [string] $LocalAdminUser = "BubbleRDP"
-)
+[string] $LocalAdminUser = "BubbleRDP"
 
 function AssertAdmin {
     $p = [Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()
@@ -14,17 +10,15 @@ function AssertAdmin {
 function Set-HKLM {
 
     Write-Host "Setting HKLM Keys to propper Values..." -ForegroundColor Yellow
-
-
     Write-Host "Enabling Terminal Server" -ForegroundColor Yellow
     Set-ItemProperty `
         -Path "HKLM:\System\CurrentControlSet\Control\Terminal Server" `
         -Name "fDenyTSConnections" `
         -Value 0
 
-    Write-Host "Forcing TLS (High) encryption"
+    Write-Host "Forcing TLS (High) encryption" -ForegroundColor Yellow
     Set-ItemProperty `
-        -Path "HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" 
+        -Path "HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" `
         -Name "SecurityLayer" `
         -Value 2
     Set-ItemProperty `
@@ -32,7 +26,7 @@ function Set-HKLM {
         -Name "MinEncryptionLevel" `
         -Value 3
 
-    Write-Host "Allowing for network level Authentication (NLA)"
+    Write-Host "Allowing for network level Authentication (NLA)" -ForegroundColor Yellow
     Set-ItemProperty `
             -Path "HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" `
             -Name "UserAuthentication" `
@@ -40,7 +34,7 @@ function Set-HKLM {
 }
 
 function Enable-RdpFirewall {
-    Write-Host "Enabling RemoteDesktop on the Firewall"
+    Write-Host "Enabling RemoteDesktop on the Firewall" -ForegroundColor
     Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
 }
 
@@ -53,10 +47,10 @@ Function Set-LocalAdmin {
         $pwd = Read-Host "Enter Password for local remote user '$User'" -AsSecureString
         New-LocalUser `
             -Name $User `
-            -Password $pwd `
-            -PasswordNeverExpires $true `
-            -AccountNeverExpires $true `
-            -UserMayNotChangePassword $false `
+            -Password:$pwd `
+            -PasswordNeverExpires:$true `
+            -AccountNeverExpires:$true `
+            -UserMayNotChangePassword:$false `
             -Description "LocalRDP User" | Out-Null
 
         Add-LocalGroupMember `
@@ -74,7 +68,6 @@ try {
     Set-HKLM
     Enable-RdpFirewall
     Set-LocalAdmin -User $LocalAdminUser
-
     Write-Host "Finished You should be able to RDP now to this server" -ForegroundColor Yellow
 
 }
