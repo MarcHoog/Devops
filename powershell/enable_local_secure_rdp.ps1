@@ -1,12 +1,7 @@
 [CmdletBinding()]
 param (
     [Parameter(Mandatory = $true)]
-    [string]$DnsNames,
-
-    [switch] $CreateLocalAdmin,
-    [string] $LocalAdminUser = "psremote",
-
-    [switch] $EnableLocalAccountRemoteUACBypass
+    [string] $LocalAdminUser = "BubbleRDP"
 )
 
 function AssertAdmin {
@@ -16,26 +11,74 @@ function AssertAdmin {
     }
 }
 
-function New-OrGet-HttpsCert {
-    param(
-        [string] $DnsNames
-    )
+function Set-HKLM {
 
-    Write-Host "Creating self-signed certificate for: $($DnsNames -join ', ')" -ForegroundColor Yellow
-    $cert = New-SelfSignedCertificate `
-        -DnsName $DnsNames `
-        -CertStoreLocation "cert:\LocalMachine\My" `
-        -KeyExportPolicy Exportable `
-        -KeyLength 2048 `
-        -KeyAlgorithm RSA `
-        -HashAlgorithm SHA256 `
-        -NotAfter (Get-Date).AddYears(5) `
-        -Provider "Microsoft Enhanced RSA and AES Cryptographic Provider" `
+    Write-Host "Setting HKLM Keys to propper Values..." -ForegroundColor Yellow
 
-    if (-not $cert) {
-        throw "Failed to create self-signed certificate."
-    }
-    return $cert
+
+    Write-Host "Enabling Terminal Server" -ForegroundColor Yellow
+    Set-ItemProperty `
+        -Path "HKLM:\System\CurrentControlSet\Control\Terminal Server" `
+        -Name "fDenyTSConnections" `
+        -Value 0
+
+    Write-Host "Forcing TLS (High) encryption"
+    Set-ItemProperty `
+        -Path "HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" 
+        -Name "SecurityLayer" `
+        -Value 2
+    Set-ItemProperty `
+        -Path "HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" `
+        -Name "MinEncryptionLevel" `
+        -Value 3
+
+    Write-Host "Allowing for network level Authentication (NLA)"
+    Set-ItemProperty `
+            -Path "HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" `
+            -Name "UserAuthentication" `
+            -Value 1
 }
 
-function Ensure-WinRMHTTS
+function Enable-RdpFirewall {
+    Write-Host "Enabling RemoteDesktop on the Firewall"
+    Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
+}
+
+Function Set-LocalAdmin {
+    Param(
+        [string] $User
+    )
+
+    if (-not (Get-LocalUser -Name $User -ErrorAction SilentlyContinue)) {
+        $pwd = Read-Host "Enter Password for local remote user '$User'" -AsSecureString
+        New-LocalUser `
+            -Name $User `
+            -Password $pwd `
+            -PasswordNeverExpires $true `
+            -AccountNeverExpires $true `
+            -UserMayNotChangePassword $false `
+            -Description "LocalRDP User" | Out-Null
+
+        Add-LocalGroupMember `
+            -Group "Remote Desktop User" -Member $User
+    }  else {
+        Write-Host "Ensure Local user is added to group"
+        Add-LocalGroupMember -Group "Remote Desktop User" -Member $User
+    }
+
+}
+
+try {
+    AssertAdmin
+
+    Set-HKLM
+    Enable-RdpFirewall
+    Set-LocalAdmin -User $LocalAdminUser
+
+    Write-Host "Finished You should be able to RDP now to this server" -ForegroundColor Yellow
+
+}
+catch {
+    Write-Error $_.Exception.Message
+    throw
+}
