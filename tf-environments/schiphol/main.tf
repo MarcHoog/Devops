@@ -43,6 +43,21 @@ module "WindowsNodePoc" {
       ips         = ["188.245.213.214"]
       description = "Allow SSH"
     }
+    rdp_tcp_in = {
+      direction   = "in"
+      protocol    = "tcp"
+      port        = "3389"
+      ips         = ["0.0.0.0/0", "::/0"]
+      description = "Allow RDP (TCP)"
+    }
+    rdp_udp_in = {
+      direction   = "in"
+      protocol    = "udp"
+      port        = "3389"
+      ips         = ["0.0.0.0/0", "::/0"]
+      description = "Allow RDP (UDP)"
+    }
+
     icmp_in = {
       direction = "in"
       protocol  = "icmp"
