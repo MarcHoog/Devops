@@ -43,6 +43,20 @@ module "WindowsNodePoc" {
       ips         = ["188.245.213.214"]
       description = "Allow SSH"
     }
+    http_in = {
+      direction   = "in"
+      protocol    = "tcp"
+      port        = "80"
+      ips         = ["0.0.0.0/0", "::/0"]
+      description = "Allow Http"
+    }
+    https_in = {
+      direction   = "in"
+      protocol    = "tcp"
+      port        = "443"
+      ips         = ["0.0.0.0/0", "::/0"]
+      description = "Allow Https"
+    }
     rdp_tcp_in = {
       direction   = "in"
       protocol    = "tcp"
