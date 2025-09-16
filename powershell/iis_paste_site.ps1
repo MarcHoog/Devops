@@ -49,7 +49,10 @@ param (
     }
 
     if ($Clipboard) {
-        $jsonContent = Get-Clipboard
+        $jsonContent = Get-Clipboard 
+        if (-not $jsonContent) {
+            throw "Clipboard is empty or does not contain valid JSON."
+        }
     } elseif ($JsonFilePath) {
         if (-not (Test-Path $JsonFilePath)) {
             throw "The specified JSON file path does not exist."

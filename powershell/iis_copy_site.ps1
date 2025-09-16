@@ -85,6 +85,6 @@ if ($Filter -and $Filter -ne "*") {
 
 $sites | Format-List
 if ($Clipboard) {
-    $sites | ConvertTo-Json -Depth 5 | Set-Clipboard
+    $sites | ConvertTo-Json -Depth 5 | clip
     Write-Host "Site configuration copied to clipboard."
 }
