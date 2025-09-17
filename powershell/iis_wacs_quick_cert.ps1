@@ -5,11 +5,6 @@ param (
     [string] $WacsPath = "C:\Program Files\win-acme\wacs.exe"
 )
 
-    $appcmd = Join-Path $env:WINDIR "System32\inetsrv\appcmd.exe"
-    if (-not (Test-Path $appcmd)) {
-        throw "IIS does not appear to be installed on this machine."
-    }
-
     if (-not (Test-Path $WacsPath)) {
         throw "The specified path to wacs.exe does not exist."
     }
