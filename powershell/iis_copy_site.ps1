@@ -72,7 +72,7 @@ param (
     [pscustomobject]@{
         Name = $siteName
         ApplicationPool = $appPool
-        PoolSettings = $appPools[$appPool] 
+        PoolSettings = if ($appPool -and $appPools.ContainsKey($appPool)) { $appPools[$appPool] } else { $null }
         PhysicalPath = $sitePath
         Bindings = $bindings
     }

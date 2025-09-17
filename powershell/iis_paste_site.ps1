@@ -107,6 +107,7 @@ param (
             $bindingInfo = ($bindings | ForEach-Object { "$($_.Protocol)/$($_.BindingInformation)" }) -join ","
             & $appcmd add site /name:$siteName /bindings:$bindingInfo /physicalPath:$physicalPath | Out-Null
             & $appcmd set app /app.name:"$siteName/" /applicationPool:$appPool | Out-Null
+            & $appcmd stop site /site.name:$siteName
             Write-Host "Created site: $siteName"
             Write-Host "Attached to application pool: $appPool"
         }
