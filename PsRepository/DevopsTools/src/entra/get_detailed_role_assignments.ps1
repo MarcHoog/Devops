@@ -2,7 +2,6 @@
 param(
 )
 
-
 function GetRoleAssignmentMap {
     $roleDefinitionMap = @{}    
     Get-AzRoleDefinition | ForEach-Object {

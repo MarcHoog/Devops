@@ -11,7 +11,7 @@
 # Entra  Scripts
 . $PSScriptRoot/src/entra/get_access_package_entitlement.ps1
 . $PSScriptRoot/src/entra/get_access_package_group_assignments.ps1
-
+. $PSScriptRoot/src/entra/cli_helper.ps1
 
 # Azure scripts 
 . $PSScriptRoot/src/azure/set_azworkspace.ps1
