@@ -24,18 +24,17 @@ function Use-SecGroup {
         if ($choice -match '^(Y|y)') {
            try {
                 $newGroup = New-MgGroup -DisplayName $GroupName -MailEnabled:$false -MailNickname ($GroupName -replace '\s','') -SecurityEnabled:$true
-                Write-Host "[Ok] Group created: $($newGroup.Id)" -ForegroundColor Green
+                Write-Host "Group created: $($newGroup.Id)" -ForegroundColor Green
                 $script:SecGroupCache += $newGroup
            } catch {
-                Write-Host "[Error] Failed to create group: $_" -ForegroundColor Red
-                return                              
+                Write-Host "Failed to create group: $_" -ForegroundColor Red
+                return $null
            } 
         }
     }
     Write-Host "You selected Security Group: $GroupName"
     return $script:SecGroupCache | Where-Object { $_.DisplayName -eq $GroupName }
 }
-
 
 Register-ArgumentCompleter -CommandName Use-SecGroup -ParameterName GroupName -ScriptBlock {
     param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameter)
