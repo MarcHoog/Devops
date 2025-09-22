@@ -1,4 +1,4 @@
-function Get-ObjectAssignments {
+function Get-ObjectAssignment {
     [CmdletBinding()]
     param(
         [Parameter(Mandatory = $true)]

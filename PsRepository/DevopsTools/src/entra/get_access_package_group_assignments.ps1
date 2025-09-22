@@ -9,6 +9,10 @@ function Get-AccessPackageGroupAssignment {
     $scopes = @("Group.Read.All", "Directory.Read.All", "User.Read.All")
     Connect-MgGraph -Scopes $scopes -NoWelcome
 
+    $groupNames = @{}
+    foreach ($g in Get-MgGroup -All) {
+        $groupNames[$g.Id] = $g.DisplayName
+    }                           
     $results = @()
     $catalogs = if ($CatalogId) {
         Get-MgEntitlementManagementCatalog -All | Where-Object { $_.Id -eq $CatalogId }
@@ -38,6 +42,7 @@ function Get-AccessPackageGroupAssignment {
                         CatalogId   = $catalog.Id
                         PackageName = $package.DisplayName
                         PackageId   = $package.Id
+                        GroupName   = $groupNames[$rs.Scope.OriginId]
                         GroupId     = $rs.Scope.OriginId
                     }
                 }

@@ -6,12 +6,15 @@
 #. $PSScriptRoot/src/iis/iis_wacs_quick_cert.ps1
 #. $PSScriptRoot/src/iis/install_iis_role.ps1
 
-. $PSScriptRoot/src/helpers/select_from_menu.ps1
+. $PSScriptRoot/src/utils/select_from_menu.ps1
 
 # Entra  Scripts
 . $PSScriptRoot/src/entra/get_access_package_entitlement.ps1
 . $PSScriptRoot/src/entra/get_access_package_group_assignments.ps1
-. $PSScriptRoot/src/entra/cli_helper.ps1
+. $PSScriptRoot/src/entra/functions/users.ps1
+. $PSScriptRoot/src/entra/functions/groups.ps1
+. $PSScriptRoot/src/entra/auto-completers/groups.ps1
+. $PSScriptRoot/src/entra/auto-completers/users.ps1 
 
 # Azure scripts 
 . $PSScriptRoot/src/azure/set_azworkspace.ps1
