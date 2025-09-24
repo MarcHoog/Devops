@@ -1,9 +1,8 @@
-function Get-AccessPackageGroupAssignment {
+function Get-AccessPackageResources {
     [CmdletBinding()]
     param(
         [string] $CatalogId,
-        [string] $PackageId,
-        [string] $GroupId
+        [string] $PackageId
     )
 
     $scopes = @("Group.Read.All", "Directory.Read.All", "User.Read.All")
@@ -33,18 +32,13 @@ function Get-AccessPackageGroupAssignment {
                 -ExpandProperty "resourceRoleScopes(`$expand=role,scope)"
 
             foreach ($rs in $roleScopes.ResourceRoleScopes) {
-                if ($rs.Scope -and $rs.Scope.OriginSystem -eq "AadGroup") {
-                    # Skip if GroupId filter is set and doesn’t match
-                    if ($GroupId -and $rs.Scope.OriginId -ne $GroupId) { continue }
-
                     $results += [pscustomobject]@{
-                        CatalogName = $catalog.DisplayName
+                        CatalogName  = $catalog.DisplayName
                         CatalogId   = $catalog.Id
-                        PackageName = $package.DisplayName
+                        PackageName = $package.DisplayName      
                         PackageId   = $package.Id
-                        GroupName   = $groupNames[$rs.Scope.OriginId]
-                        GroupId     = $rs.Scope.OriginId
-                    }
+                        OriginId    = $rs.Scope.OriginId
+                        OriginSystem = $rs.Scope.OriginSystem
                 }
             }
         }

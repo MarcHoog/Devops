@@ -1,10 +1,14 @@
-function Get-ObjectAssignment {
+function Get-RbacAssignment {
     [CmdletBinding()]
     param(
-        [Parameter(Mandatory = $true)]
-        [string]$ObjectId
+        [string]$ObjectId,
+        [string[]]$SubscriptionId,
+        [switch]$SkipTenantCheck = $false
     )
-
+    
+    $scopes = @("Group.Read.All", "Directory.Read.All", "User.Read.All")
+    Connect-MgGraph -Scopes $scopes -NoWelcome
+    
     $results = @()
 
     $context = Get-AzContext -ErrorAction SilentlyContinue
@@ -26,11 +30,35 @@ function Get-ObjectAssignment {
         $context = Get-AzContext
     }
 
-    $subscriptions = Get-AzSubscription -TenantId $context.Tenant.Id    
-    foreach ($sub in $subscriptions) {
+    if ($SubscriptionId) {
+        $subsToCheck = @()
+        foreach ($subId in $SubscriptionId) {
+            $sub = Get-AzSubscription -SubscriptionId $subId -ErrorAction SilentlyContinue
+            if ($null -ne $sub) {
+                $subsToCheck += $sub
+            }
+            else {
+                Write-Warning "Subscription with ID $subId not found or you don't have access"
+            }
+        }
+    }
+    else {
+        $subsToCheck = @()
+        $subsToCheck += Get-AzSubscription -TenantId $context.Tenant.Id
+    }
+    
+    foreach ($sub in $subsToCheck) {
         Write-Host "Checking subscription: $($sub.Name) [$($sub.Id)]" -ForegroundColor Cyan
         Set-AzContext -SubscriptionId $sub.Id -TenantId $sub.TenantId | Out-Null
-        $activeAssignments = Get-AzRoleAssignment -ObjectId $ObjectId -ErrorAction SilentlyContinue
+        if (-not $ObjectId) {
+            $activeAssignments = Get-AzRoleAssignment  -ErrorAction SilentlyContinue    
+            Write-Host "Fetching assignments for all objects" -ForegroundColor Yellow
+        }
+        else {
+            $activeAssignments = Get-AzRoleAssignment -ObjectId $ObjectId -ErrorAction SilentlyContinue
+            Write-Host "Fetching assignments for object: $ObjectId" -ForegroundColor Yellow
+        }
+
 
         foreach ($a in $activeAssignments) {
             $results += [pscustomobject]@{
