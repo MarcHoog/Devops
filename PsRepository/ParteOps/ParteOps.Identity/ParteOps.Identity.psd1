@@ -9,9 +9,8 @@
 
     FunctionsToExport = @(
         "Get-SecGroup"
-        "Get-SecGroupFromCache"
         "Copy-SecGroup"
-        "Set-SecGroupCache"
+        "Update-SecGroupCompleter"
         "New-SecGroup"
     ) # handled in PSM1
     CmdletsToExport   = @()

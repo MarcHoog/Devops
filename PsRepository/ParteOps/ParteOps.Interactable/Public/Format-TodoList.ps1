@@ -47,24 +47,10 @@ function Format-TodoList {
 
             if ($choice -eq 'q') { break }
             
-            if ($choice -eq 'd') {
-                Write-Host "`nDEBUG INFO:" -ForegroundColor Yellow
-                Write-Host "Todo count: $($todo.Count)" -ForegroundColor Yellow
-                Write-Host "Done hashtable keys: $($done.Keys -join ', ')" -ForegroundColor Yellow
-                Write-Host "Done hashtable values: $($done.Values -join ', ')" -ForegroundColor Yellow
-                for ($i = 0; $i -lt $todo.Count; $i++) {
-                    Write-Host "Index $i : Key exists = $($done.ContainsKey($i)), Value = $($done[$i])" -ForegroundColor Yellow
-                }
-                Read-Host "Press Enter to continue"
-                continue
-            }
-
-            # Debug the input parsing
-            Write-Host "DEBUG INPUT: Raw choice = '$choice'" -ForegroundColor Red
-            Write-Host "DEBUG INPUT: Choice length = $($choice.Length)" -ForegroundColor Red
-            Write-Host "DEBUG INPUT: Choice as int = $($choice -as [int])" -ForegroundColor Red
-            Write-Host "DEBUG INPUT: Choice type = $($choice.GetType().Name)" -ForegroundColor Red
-            Write-Host "DEBUG INPUT: ASCII values = $([System.Text.Encoding]::ASCII.GetBytes($choice) -join ',')" -ForegroundColor Red
+            Write-Verbose "DEBUG INPUT: Raw choice = '$choice'" -ForegroundColor Red
+            Write-Verbose "DEBUG INPUT: Choice length = $($choice.Length)" -ForegroundColor Red
+            Write-Verbose "DEBUG INPUT: Choice as int = $($choice -as [int])" -ForegroundColor Red
+            Write-Verbose "DEBUG INPUT: Choice type = $($choice.GetType().Name)" -ForegroundColor Red
 
             # More robust input parsing
             $choiceNum = $null
@@ -72,17 +58,15 @@ function Format-TodoList {
             if ([int]::TryParse($choiceTrimmed, [ref]$choiceNum)) {
                 if ($choiceNum -ge 1 -and $choiceNum -le $todo.Count) {
                     $idx = $choiceNum - 1
-                    Write-Host "DEBUG: Toggling index $idx (choice was $choice)" -ForegroundColor Magenta
-                    Write-Host "DEBUG: Before toggle - done[$idx] = $($done[$idx])" -ForegroundColor Magenta
                     $done[$idx] = -not $done[$idx]
-                    Write-Host "DEBUG: After toggle - done[$idx] = $($done[$idx])" -ForegroundColor Magenta
+                    Write-Verbose "DEBUG: After toggle - done[$idx] = $($done[$idx])" -ForegroundColor Magenta
                     Start-Sleep -Seconds 1
                 } else {
-                    Write-Host "DEBUG: Number out of range!" -ForegroundColor Red
+                    Write-Verbose "DEBUG: Number out of range!" -ForegroundColor Red
                     Start-Sleep -Seconds 1
                 }
             } else {
-                Write-Host "DEBUG: Failed to parse as integer!" -ForegroundColor Red
+                Write-Verbose "DEBUG: Failed to parse as integer!" -ForegroundColor Red
                 Start-Sleep -Seconds 1
             }
         }

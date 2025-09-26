@@ -9,7 +9,7 @@
 
     FunctionsToExport = @(
         "Format-TodoList",
-        "Select-FromMenu"
+        "Format-ToChoiseMenu"
     ) 
     CmdletsToExport   = @()
     AliasesToExport   = @()

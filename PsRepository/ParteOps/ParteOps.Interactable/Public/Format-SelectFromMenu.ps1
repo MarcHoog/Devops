@@ -1,4 +1,4 @@
-function Select-FromMenu($title, $options) {
+function Format-ToChoiseMenu($title, $options) {
     $keys = @($options.Keys)   # capture as array in fixed order
     Write-Host "`n$title" -ForegroundColor Cyan
     for ($i = 0; $i -lt $keys.Count; $i++) {

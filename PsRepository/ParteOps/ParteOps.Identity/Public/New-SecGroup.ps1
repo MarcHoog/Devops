@@ -3,16 +3,16 @@ function New-SecGroup {
         [string] $GroupName
     )
 
-    $group = Get-SecGroup -GroupName $GroupName
+    $scopes = @("Group.ReadWrite.All", "Directory.Read.All", "User.Read.All")
+    Connect-MgGraph -Scopes $scopes -NoWelcome
+
+    $group = Get-MgGroup -Filter "displayName eq '$GroupName'" | Where-Object { $_.GroupTypes -notcontains "Unified" }      
     if ($group) {
         Write-Host "[Info] Group already exists: $($group.DisplayName) ($($group.Id))" -ForegroundColor DarkGray
         return $group 
     }                                       
 
     try {
-        $scopes = @("Group.ReadWrite.All", "Directory.Read.All", "User.Read.All")
-        Connect-MgGraph -Scopes $scopes -NoWelcome
-        
         $newGroup = New-MgGroup `
             -DisplayName $GroupName `
             -MailEnabled:$false `

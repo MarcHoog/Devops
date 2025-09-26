@@ -49,14 +49,17 @@ function ConvertFrom-AzScope {
     }
     elseif ($parts[0] -eq 'providers' -and $parts[1] -eq 'Microsoft.Management' -and $parts[2] -eq 'managementGroups') {
         $obj.ScopeType       = 'ManagementGroup'
+        $obj.ResourceType    = 'ManagementGroup'  
         $obj.Name = $parts[3]
     }
     elseif ($parts[0] -eq 'subscriptions') {
         $obj.ScopeType      = 'Subscription'
+        $obj.ResourceType  = 'Subscription'
         $obj.Name = $parts[1]
 
         if ($parts.Length -ge 4 -and $parts[2] -eq 'resourceGroups') {
             $obj.ScopeType     = 'ResourceGroup'
+            $obj.ResourceType  = 'ResourceGroup'            
             $obj.Name = $parts[3]
 
             if ($parts.Length -ge 6 -and $parts[4] -eq 'providers') {
