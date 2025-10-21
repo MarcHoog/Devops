@@ -1,7 +1,0 @@
----
-plugin: hetzner.hcloud.hcloud
-api_token: "{{ lookup('env', 'HCLOUD_TOKEN') }}"
-keyed_groups:
-  - key: "labels.k3s"
-    prefix: ""
-    separator: ""
